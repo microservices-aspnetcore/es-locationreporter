@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+
 
 namespace StatlerWaldorfCorp.LocationReporter
 {
@@ -6,7 +9,19 @@ namespace StatlerWaldorfCorp.LocationReporter
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IConfiguration config = new ConfigurationBuilder()
+ 		.AddCommandLine(args)
+		.Build();
+
+	    Startup.Args = args;
+
+	    var host = new WebHostBuilder()
+		.UseKestrel()
+		.UseStartup<Startup>()
+		.UseConfiguration(config)
+		.Build();
+
+	    host.Run();
         }
     }
 }
