@@ -1,4 +1,6 @@
 
+[![wercker status](https://app.wercker.com/status/e4b3fc720fe1dd78448db63586a6b4c3/m/master "wercker status")](https://app.wercker.com/project/byKey/e4b3fc720fe1dd78448db63586a6b4c3)
+
 # Location Reporter
 Location Reporter Microservice. This is part of the suite of services used for the Event Sourcing / CQRS sample in the **Microservices with ASP.NET Core** book from O'Reilly Media. This sample fills the role of the _command submitter_. Applications (mobile, web, embedded, etc) will consume this service to indicate that a new location of a team member has been determined. 
 
