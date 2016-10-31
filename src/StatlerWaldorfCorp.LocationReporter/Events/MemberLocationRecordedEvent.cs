@@ -1,6 +1,6 @@
 using System;
 
-namespace StatlerWaldorfCorp.LocationReporter.Models
+namespace StatlerWaldorfCorp.LocationReporter.Events
 {
     public class MemberLocationRecordedEvent
     {
@@ -9,5 +9,6 @@ namespace StatlerWaldorfCorp.LocationReporter.Models
         public double Longitude { get; set; }
         public Guid MemberID { get; set; }
         public long RecordedTime { get; set; }
+        public Guid ReportID { get; set; }
     }
 }

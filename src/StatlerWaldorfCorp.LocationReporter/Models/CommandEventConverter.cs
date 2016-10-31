@@ -1,8 +1,9 @@
 using System;
+using StatlerWaldorfCorp.LocationReporter.Events;
 
 namespace StatlerWaldorfCorp.LocationReporter.Models
 {
-    public class CommandEventConverter
+    public class CommandEventConverter : ICommandEventConverter
     {
         public MemberLocationRecordedEvent CommandToEvent(LocationReport locationReport) 
         {
@@ -11,6 +12,7 @@ namespace StatlerWaldorfCorp.LocationReporter.Models
                 Longitude = locationReport.Longitude,
                 Origin = locationReport.Origin,
                 MemberID = locationReport.MemberID,
+                ReportID = locationReport.ReportID,
                 RecordedTime = DateTime.Now.ToUniversalTime().Ticks
             };
 

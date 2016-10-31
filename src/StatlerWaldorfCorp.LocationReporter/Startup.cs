@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using StatlerWaldorfCorp.LocationReporter.Models;
+using StatlerWaldorfCorp.LocationReporter.Events;
 
 namespace StatlerWaldorfCorp.LocationReporter
 {
@@ -32,6 +34,8 @@ namespace StatlerWaldorfCorp.LocationReporter
         public void ConfigureServices(IServiceCollection services) 
         {
             services.AddMvc();
+            services.AddSingleton(typeof(IEventEmitter), new AMQPEventEmitter());
+            services.AddSingleton(typeof(ICommandEventConverter), new CommandEventConverter());
         }
 
         public void Configure(IApplicationBuilder app) 

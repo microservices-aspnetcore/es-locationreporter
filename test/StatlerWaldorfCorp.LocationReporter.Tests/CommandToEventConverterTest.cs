@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using StatlerWaldorfCorp.LocationReporter.Models;
+using StatlerWaldorfCorp.LocationReporter.Events;
 
 namespace StatlerWaldorfCorp.LocationReporter.Tests
 {
