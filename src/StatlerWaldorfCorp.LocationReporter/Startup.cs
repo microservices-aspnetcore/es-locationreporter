@@ -17,13 +17,14 @@ namespace StatlerWaldorfCorp.LocationReporter
         public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory) 
         {
             var builder = new ConfigurationBuilder()
-		.AddEnvironmentVariables()
-		.AddCommandLine(Startup.Args);
-	    Configuration = builder.Build();
+		        .AddEnvironmentVariables()
+		        .AddCommandLine(Startup.Args);
 
-	    this.loggerFactory = loggerFactory;
-	    this.loggerFactory.AddConsole(LogLevel.Information);
-	    this.loggerFactory.AddDebug();
+	        Configuration = builder.Build();
+
+    	    this.loggerFactory = loggerFactory;
+	        this.loggerFactory.AddConsole(LogLevel.Information);
+	        this.loggerFactory.AddDebug();
         }
 
         public IConfigurationRoot Configuration { get; }
