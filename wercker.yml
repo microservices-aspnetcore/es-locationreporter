@@ -1,0 +1,80 @@
+box: microsoft/dotnet:1.0.0-preview2-sdk
+no-response-timeout: 10
+build:
+  steps: 
+# compile  
+    - script:
+        name: service-restore
+        cwd: src/StatlerWaldorfCorp.LocationReporter
+        code: |
+          dotnet restore
+    - script:
+        name: service-build
+        cwd: src/StatlerWaldorfCorp.LocationReporter
+        code: |
+          dotnet build  
+
+# unit tests          
+    - script:
+        name: unit-test-restore
+        cwd: test/StatlerWaldorfCorp.LocationReporter.Tests
+        code: |
+           dotnet restore
+    - script:
+        name: unit-test-build
+        cwd: test/StatlerWaldorfCorp.LocationReporter.Tests
+        code: |
+          dotnet build
+    - script:
+        name: unit-test-run
+        cwd: test/StatlerWaldorfCorp.LocationReporter.Tests
+        code: |
+          dotnet test
+
+# interation tests
+# TBD
+
+
+# packaging
+    - script:
+        name: publish
+        cwd: src/StatlerWaldorfCorp.LocationReporter
+        code: |
+          dotnet publish -o publish  
+    - script:
+        name: copy binary
+        cwd: src/StatlerWaldorfCorp.LocationReporter
+        code: |
+          cp -r . $WERCKER_OUTPUT_DIR/app 
+    - script:
+        name: copy entrypoint
+        code: |
+          cp docker_entrypoint.sh $WERCKER_OUTPUT_DIR/app
+          ls $WERCKER_OUTPUT_DIR/app
+    - script:
+        name: copy config
+        cwd: src/StatlerWaldorfCorp.LocationReporter
+        code: |
+          cp appsettings*json $WERCKER_OUTPUT_DIR/app/publish
+          mkdir -p $WERCKER_OUTPUT_DIR/app/publish/app/tmp
+deploy:
+  steps:
+    - internal/docker-push:
+        cwd: $WERCKER_OUTPUT_DIR/app
+        username: $USERNAME
+        password: $PASSWORD
+        repository: dotnetcoreservices/locationreporter
+        registry: https://registry.hub.docker.com
+        entrypoint: "/pipeline/source/app/docker_entrypoint.sh"
+
+cloud-deploy:
+  steps:
+    - chrisumbel/cf-deploy:
+        api: $API
+        user: $USER
+        password: $PASSWORD
+        org: $ORG
+        space: $SPACE
+        appname: locationreporter
+        docker_image: dotnetcoreservices/locationreporter
+        skip_ssl_validation: true
