@@ -10,5 +10,6 @@ namespace StatlerWaldorfCorp.LocationReporter.Events
         public Guid MemberID { get; set; }
         public long RecordedTime { get; set; }
         public Guid ReportID { get; set; }
+        public Guid TeamID { get; set; }
     }
 }

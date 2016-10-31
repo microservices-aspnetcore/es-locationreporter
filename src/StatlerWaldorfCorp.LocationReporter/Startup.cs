@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using StatlerWaldorfCorp.LocationReporter.Models;
 using StatlerWaldorfCorp.LocationReporter.Events;
+using StatlerWaldorfCorp.LocationReporter.Services;
 
 namespace StatlerWaldorfCorp.LocationReporter
 {
@@ -36,6 +37,7 @@ namespace StatlerWaldorfCorp.LocationReporter
             services.AddMvc();
             services.AddSingleton(typeof(IEventEmitter), new AMQPEventEmitter());
             services.AddSingleton(typeof(ICommandEventConverter), new CommandEventConverter());
+            services.AddScoped(typeof(ITeamServiceClient), typeof(HttpTeamServiceClient));
         }
 
         public void Configure(IApplicationBuilder app) 

@@ -14,8 +14,9 @@ namespace StatlerWaldorfCorp.LocationReporter.Tests
         {
             CommandEventConverter converter = new CommandEventConverter();
             FakeEventEmitter emitter = new FakeEventEmitter();
+            FakeTeamServiceClient teamServiceClient = new FakeTeamServiceClient();
 
-            LocationReportsController controller = new LocationReportsController(converter, emitter);
+            LocationReportsController controller = new LocationReportsController(converter, emitter, teamServiceClient);
 
             LocationReport report = new LocationReport {
                 Latitude = 10.0,
@@ -32,6 +33,8 @@ namespace StatlerWaldorfCorp.LocationReporter.Tests
             Assert.Equal( emitter.MemberLocationRecordedEvents[0].Origin, report.Origin);
             Assert.Equal( emitter.MemberLocationRecordedEvents[0].MemberID, report.MemberID);
             Assert.Equal( emitter.MemberLocationRecordedEvents[0].ReportID, report.ReportID);
+
+            Assert.Equal( emitter.MemberLocationRecordedEvents[0].TeamID, teamServiceClient.FixedID);
             
             Assert.Equal(201, (result as ObjectResult).StatusCode.Value);
         }
