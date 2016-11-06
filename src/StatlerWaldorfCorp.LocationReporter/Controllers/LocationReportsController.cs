@@ -14,7 +14,9 @@ namespace StatlerWaldorfCorp.LocationReporter.Controllers
         private ITeamServiceClient teamServiceClient;
         
 
-        public LocationReportsController(ICommandEventConverter converter, IEventEmitter eventEmitter, ITeamServiceClient teamServiceClient) {
+        public LocationReportsController(ICommandEventConverter converter, 
+            IEventEmitter eventEmitter, 
+            ITeamServiceClient teamServiceClient) {
             this.converter = converter;
             this.eventEmitter = eventEmitter;
             this.teamServiceClient = teamServiceClient;

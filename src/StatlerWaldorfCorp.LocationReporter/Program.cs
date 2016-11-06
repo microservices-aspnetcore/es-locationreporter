@@ -10,18 +10,18 @@ namespace StatlerWaldorfCorp.LocationReporter
         public static void Main(string[] args)
         {
             IConfiguration config = new ConfigurationBuilder()
- 		.AddCommandLine(args)
-		.Build();
+ 				.AddCommandLine(args)
+				.Build();
 
-	    Startup.Args = args;
+	    	Startup.Args = args;
 
-	    var host = new WebHostBuilder()
-		.UseKestrel()
-		.UseStartup<Startup>()
-		.UseConfiguration(config)
-		.Build();
+	    	var host = new WebHostBuilder()
+				.UseKestrel()
+				.UseStartup<Startup>()
+				.UseConfiguration(config)
+				.Build();
 
-	    host.Run();
+	    	host.Run();
         }
     }
 }
