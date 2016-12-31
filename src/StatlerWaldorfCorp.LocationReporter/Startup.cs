@@ -14,7 +14,7 @@ namespace StatlerWaldorfCorp.LocationReporter
     public class Startup
     {
         public static string[] Args { get; set; } = new String[] {};
-        private ILogger logger;
+        
         private ILoggerFactory loggerFactory;
 
         public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory) 
