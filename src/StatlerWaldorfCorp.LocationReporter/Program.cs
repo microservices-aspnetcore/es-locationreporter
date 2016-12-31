@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-
+using System.IO;
 
 namespace StatlerWaldorfCorp.LocationReporter
 {
@@ -13,11 +13,10 @@ namespace StatlerWaldorfCorp.LocationReporter
  				.AddCommandLine(args)
 				.Build();
 
-	    	Startup.Args = args;
-
 	    	var host = new WebHostBuilder()
 				.UseKestrel()
 				.UseStartup<Startup>()
+				.UseContentRoot(Directory.GetCurrentDirectory())
 				.UseConfiguration(config)
 				.Build();
 
