@@ -31,7 +31,7 @@ namespace StatlerWaldorfCorp.LocationReporter.Events
             connectionFactory.HostName = rabbitServiceBinding.Credentials["hostname"].Value;
             connectionFactory.Uri = rabbitServiceBinding.Credentials["uri"].Value;
             
-            logger.LogInformation("AMQP Event Emitter started with URI {0}", rabbitServiceBinding.Credentials["uri"].Value);
+            logger.LogInformation("AMQP Event Emitter configured with URI {0}", rabbitServiceBinding.Credentials["uri"].Value);
         }
         public const string QUEUE_LOCATIONRECORDED = "memberlocationrecorded";
 
