@@ -41,14 +41,18 @@ namespace StatlerWaldorfCorp.LocationReporter
 
             services.AddSingleton(typeof(IEventEmitter), typeof(AMQPEventEmitter));
             services.AddSingleton(typeof(ICommandEventConverter), typeof(CommandEventConverter));
-            services.AddScoped(typeof(ITeamServiceClient), typeof(HttpTeamServiceClient));
+            services.AddSingleton(typeof(ITeamServiceClient), typeof(HttpTeamServiceClient));
         }
 
         public void Configure(IApplicationBuilder app, 
                 IHostingEnvironment env, 
                 ILoggerFactory loggerFactory,
+                ITeamServiceClient teamServiceClient,
                 IEventEmitter eventEmitter) 
         {           
+            // Asked for instances of singletons during Startup
+            // to force initialization early.
+            
             app.UseMvc();
         }
     }
