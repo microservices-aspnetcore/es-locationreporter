@@ -36,12 +36,17 @@ build:
         name: publish
         cwd: src/StatlerWaldorfCorp.LocationReporter
         code: |
-          dotnet publish -o public
+          dotnet publish -o publish
     - script:
         name: copy binary
         cwd: src/StatlerWaldorfCorp.LocationReporter
         code: |
           cp -r . $WERCKER_OUTPUT_DIR/app     
+    - script:
+        name: copy config
+        cwd: src/StatlerWaldorfCorp.LocationReporter
+        code: |
+          cp appsettings.json $WERCKER_OUTPUT_DIR/app/publish
 
 deploy:
   steps:
