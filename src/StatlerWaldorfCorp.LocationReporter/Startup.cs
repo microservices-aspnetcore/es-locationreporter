@@ -8,8 +8,6 @@ using System.Linq;
 using StatlerWaldorfCorp.LocationReporter.Models;
 using StatlerWaldorfCorp.LocationReporter.Events;
 using StatlerWaldorfCorp.LocationReporter.Services;
-using Steeltoe.Extensions.Configuration;
-using Steeltoe.Extensions.Configuration.CloudFoundry;
 
 namespace StatlerWaldorfCorp.LocationReporter
 {
@@ -23,8 +21,7 @@ namespace StatlerWaldorfCorp.LocationReporter
             var builder = new ConfigurationBuilder()                
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-		        .AddEnvironmentVariables()		    
-                .AddCloudFoundry();
+		        .AddEnvironmentVariables();		                    
 
 	        Configuration = builder.Build();    		        
         }
@@ -36,8 +33,8 @@ namespace StatlerWaldorfCorp.LocationReporter
             services.AddMvc();
             services.AddOptions();
 
-            services.Configure<CloudFoundryApplicationOptions>(Configuration);
-            services.Configure<CloudFoundryServicesOptions>(Configuration);            
+            services.Configure<AMQPOptions>(Configuration.GetSection("amqp"));            
+            services.Configure<TeamServiceOptions>(Configuration.GetSection("teamservice"));
 
             services.AddSingleton(typeof(IEventEmitter), typeof(AMQPEventEmitter));
             services.AddSingleton(typeof(ICommandEventConverter), typeof(CommandEventConverter));

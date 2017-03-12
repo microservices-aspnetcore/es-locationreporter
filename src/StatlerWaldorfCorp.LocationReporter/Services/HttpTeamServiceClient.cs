@@ -2,34 +2,31 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Linq;
-using Steeltoe.Extensions.Configuration.CloudFoundry;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using StatlerWaldorfCorp.LocationReporter.Models;
 
 namespace StatlerWaldorfCorp.LocationReporter.Services
 {
     public class HttpTeamServiceClient : ITeamServiceClient
-    {
-        private readonly Service teamServiceBinding;
-
+    {        
         private readonly ILogger logger;
 
         private HttpClient httpClient;
 
         public HttpTeamServiceClient(
-            IOptions<CloudFoundryServicesOptions> servicesOptions,
+            IOptions<TeamServiceOptions> serviceOptions,
             ILogger<HttpTeamServiceClient> logger)
         {
             this.logger = logger;
                
-            this.teamServiceBinding = servicesOptions.Value.Services.FirstOrDefault( s => s.Name == "teamservice");
+            var url = serviceOptions.Value.Url;
 
-            logger.LogInformation("Team Service HTTP client using URL {0}",
-                teamServiceBinding.Credentials["url"].Value);
+            logger.LogInformation("Team Service HTTP client using URL {0}", url);
 
             httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(teamServiceBinding.Credentials["url"].Value);
+            httpClient.BaseAddress = new Uri(url);
         }
         public Guid GetTeamForMember(Guid memberId)
         {                            

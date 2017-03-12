@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using Steeltoe.Extensions.Configuration.CloudFoundry;
+using StatlerWaldorfCorp.LocationReporter.Models;
 
 namespace StatlerWaldorfCorp.LocationReporter.Events
 {    
@@ -13,25 +13,25 @@ namespace StatlerWaldorfCorp.LocationReporter.Events
     {
         private readonly ILogger logger;
 
-        private Service rabbitServiceBinding;
+        private AMQPOptions rabbitOptions;
 
         private ConnectionFactory connectionFactory;
 
         public AMQPEventEmitter(ILogger<AMQPEventEmitter> logger,
-            IOptions<CloudFoundryServicesOptions> servicesOptions)
+            IOptions<AMQPOptions> amqpOptions)
         {
             this.logger = logger;
-            this.rabbitServiceBinding = servicesOptions.Value.Services.FirstOrDefault( s => s.Name == "rabbitmq");
+            this.rabbitOptions = amqpOptions.Value;
 
             connectionFactory = new ConnectionFactory();
             
-            connectionFactory.UserName = rabbitServiceBinding.Credentials["username"].Value;
-            connectionFactory.Password = rabbitServiceBinding.Credentials["password"].Value;
-            connectionFactory.VirtualHost = rabbitServiceBinding.Credentials["vhost"].Value;
-            connectionFactory.HostName = rabbitServiceBinding.Credentials["hostname"].Value;
-            connectionFactory.Uri = rabbitServiceBinding.Credentials["uri"].Value;
+            connectionFactory.UserName = rabbitOptions.Username;
+            connectionFactory.Password = rabbitOptions.Password;
+            connectionFactory.VirtualHost = rabbitOptions.VirtualHost;
+            connectionFactory.HostName = rabbitOptions.HostName;
+            connectionFactory.Uri = rabbitOptions.Uri;
             
-            logger.LogInformation("AMQP Event Emitter configured with URI {0}", rabbitServiceBinding.Credentials["uri"].Value);
+            logger.LogInformation("AMQP Event Emitter configured with URI {0}", rabbitOptions.Uri);
         }
         public const string QUEUE_LOCATIONRECORDED = "memberlocationrecorded";
 
