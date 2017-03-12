@@ -47,7 +47,7 @@ build:
         cwd: src/StatlerWaldorfCorp.LocationReporter
         code: |
           cp appsettings.json $WERCKER_OUTPUT_DIR/app/publish
-          ls -lF /pipeline/source/app
+          ls -lF $WERCKER_OUTPUT_DIR/app
 
 deploy:
   steps:
@@ -57,4 +57,4 @@ deploy:
         password: $PASSWORD
         repository: dotnetcoreservices/locationreporter
         registry: https://registry.hub.docker.com
-        entrypoint: "/pipeline/source/app/docker_entrypoint.sh"
+        entrypoint: "$WERCKER_OUTPUT_DIR/app/docker_entrypoint.sh"
