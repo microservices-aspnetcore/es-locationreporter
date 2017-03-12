@@ -49,13 +49,11 @@ build:
           cp appsettings.json $WERCKER_OUTPUT_DIR/app/publish
           echo $WERCKER_OUTPUT_DIR
           ls -lF $WERCKER_OUTPUT_DIR/app
-          ls /pipeline/output/app/docker_entrypoint.sh
-          ls /pipeline/source/app/docker_entrypoint.sh
+          ls /pipeline/output/app/docker_entrypoint.sh       
 
 deploy:
   steps:
-    - internal/docker-push:
-        cwd: $WERCKER_OUTPUT_DIR/app
+    - internal/docker-push:        
         username: $USERNAME
         password: $PASSWORD
         repository: dotnetcoreservices/locationreporter
