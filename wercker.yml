@@ -47,6 +47,7 @@ build:
         cwd: src/StatlerWaldorfCorp.LocationReporter
         code: |
           cp appsettings.json $WERCKER_OUTPUT_DIR/app/publish
+          ls -lF /pipeline/source/app
 
 deploy:
   steps:
