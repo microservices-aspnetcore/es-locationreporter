@@ -58,4 +58,4 @@ deploy:
         password: $PASSWORD
         repository: dotnetcoreservices/locationreporter
         registry: https://registry.hub.docker.com
-        entrypoint: "./app/docker_entrypoint.sh"
+        entrypoint: "/pipeline/output/app/docker_entrypoint.sh"
